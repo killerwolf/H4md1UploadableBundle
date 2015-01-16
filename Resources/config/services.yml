@@ -1,0 +1,7 @@
+services:
+    h4md1_uploadable.uploadable_event_subscriber:
+        class: H4md1\UploadableBundle\EventListener\UploadableSubscriber
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setUploadRootDir, [ %h4md1_uploadable.upload_dir% ] ]

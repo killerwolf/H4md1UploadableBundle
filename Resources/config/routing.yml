@@ -1,0 +1,3 @@
+h4md1_uploadable_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: H4md1UploadableBundle:Default:index }
