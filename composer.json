@@ -5,7 +5,8 @@
       "psr-4": { "\\H4md1\\UploadableBundle\\": "src/" }
     },
     "require": {
-        "doctrine/orm": "~2.5@dev"
+        "php": ">=5.4",
+        "symfony/framework-bundle": "~2.3"
     },
     "license": "copyleft",
     "authors": [
