@@ -1,0 +1,15 @@
+{
+    "name": "h4md1/uploadable-bundle",
+    "description": "This bundle ease file upload integration with doctrine/orm and symfony/form",
+    "require": {
+        "doctrine/orm": "~2.5@dev"
+    },
+    "license": "copyleft",
+    "authors": [
+        {
+            "name": "Hamdi LAADHARI",
+            "email": "hlaadhar@prismamedia.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
