@@ -75,11 +75,11 @@ trait UploadableEntityTrait{
     }
 
     public function getFullFilePath() {
-        return null === $this->filePath ? null : $this->getUploadRootDir(). $this->filePath;
+        return null === $this->filePath ? null : $this->getUploadRootDir().'/'. $this->filePath;
     }
 
     public function getTmpUploadRootDir() {
         // the absolute directory path where uploaded documents should be saved
-        return '/var/www/diaporama/var/tmp/upload/';
+        return '/var/www/diaporama/var/tmp/upload';
     }
 }

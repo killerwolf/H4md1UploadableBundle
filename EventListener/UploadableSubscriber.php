@@ -41,6 +41,19 @@ class UploadableSubscriber implements EventSubscriber
             $this->uploadFile($e);
         }
     }
+
+    public function postSave(LifecycleEventArgs $args){
+        if(
+            ($e = $args->getEntity())
+            && $this->supports($e)
+            && null !== $e->getFile()
+        ){
+            //$this->fs->remove($e->getFullFilePath());
+            $this->fs->mkdir($e->getUploadRootDir());
+            $this->fs->rename($e->getTmpUploadRootDir().'/'.$e->getFilePath(), $e->getFullFilePath(),true);
+        }
+    }
+
     public function preUpdate(LifecycleEventArgs $args)
     {
         $this->preSave($args);
@@ -53,27 +66,12 @@ class UploadableSubscriber implements EventSubscriber
 
     public function postUpdate(LifecycleEventArgs $args)
     {
-        if(
-            ($e = $args->getEntity())
-            && $this->supports($e)
-            && null === $e->getFile()
-        ){
-            $this->fs->mkdir($e->getUploadRootDir());
-            $this->fs->rename($e->getTmpUploadRootDir().$e->getFilePath(), $e->getFullFilePath(),true);
-        }
+        $this->postSave($args);
     }
 
     public function postPersist(LifecycleEventArgs $args)
     {
-        if(
-            ($e = $args->getEntity())
-            && $this->supports($e)
-            && null !== $e->getFile()
-        ){
-            $this->fs->remove($e->getFullFilePath());
-            $this->fs->mkdir($e->getUploadRootDir());
-            $this->fs->rename($e->getTmpUploadRootDir().$e->getFilePath(), $e->getFullFilePath(),true);
-        }
+        $this->postSave($args);
     }
 
     public function preRemove(LifecycleEventArgs $args)
@@ -100,11 +98,8 @@ class UploadableSubscriber implements EventSubscriber
             //remove old one first
             $this->removeFile($e);
         }
-        if(!$e->getId()){
-            $this->fs->rename($e->getFile()->getPathname(), $e->getTmpUploadRootDir() . '/' . $e->getFile()->getClientOriginalName(),true);
-        }else{
-            $this->fs->rename($e->getFile()->getPathname(), $e->getUploadRootDir() . '/' . $e->getFile()->getClientOriginalName(),true);
-        }
+
+        $this->fs->rename($e->getFile()->getPathname(), $e->getTmpUploadRootDir() . '/' . $e->getFile()->getClientOriginalName(),true);
         $e->setFilePath($e->getFile()->getClientOriginalName());
     }
 
