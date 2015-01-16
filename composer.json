@@ -1,6 +1,9 @@
 {
     "name": "h4md1/uploadable-bundle",
     "description": "This bundle ease file upload integration with doctrine/orm and symfony/form",
+    "autoload": {
+      "psr-4": { "\\H4md1\\UploadableBundle\\": "src/" }
+    },
     "require": {
         "doctrine/orm": "~2.5@dev"
     },
