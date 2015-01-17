@@ -1,6 +1,6 @@
 <?php
 
-namespace H4md1\AppBundle\Filesystem;
+namespace H4md1\UploadableBundle\Filesystem;
 
 trait FilesystemAwareTrait {
 
