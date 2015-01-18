@@ -1,7 +1,21 @@
 services:
-    h4md1_uploadable.uploadable_event_subscriber:
-        class: H4md1\UploadableBundle\EventListener\UploadableSubscriber
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
+#    h4md1_uploadable.uploadable_event_subscriber:
+#        class: H4md1\UploadableBundle\EventListener\UploadableSubscriber
+#        tags:
+#            - { name: doctrine.event_subscriber, connection: default }
+#        calls:
+#            - [ setUploadRootDir, [ %h4md1_uploadable.upload_dir% ] ]
+#    h4md1_app.file_type_extension:
+#        class: H4md1\UploadableBundle\Form\Extension\FileTypeExtension
+#        tags:
+#            - { name: form.type_extension, alias: file }
+    h4md1_app.upload_manager:
+        class: H4md1\UploadableBundle\UploadManager
         calls:
-            - [ setUploadRootDir, [ %h4md1_uploadable.upload_dir% ] ]
+            - [setMountManager, [@oneup_flysystem.mount_manager]]
+    h4md1_app.file_upload_type:
+        class: H4md1\UploadableBundle\Form\Type\FileUploadType
+        tags:
+            - { name: form.type, alias: file_upload }
+        calls:
+            - [setUploadManager, [@h4md1_app.upload_manager]]
