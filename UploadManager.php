@@ -18,6 +18,11 @@ class UploadManager{
         return $this;
     }
 
+    public function setMappings($m){
+        $this->mappings = $m;
+        return $this;
+    }
+
     public function getMountManager(){
         return $this->mm;
     }
@@ -30,13 +35,13 @@ class UploadManager{
                 {
                     return true;
                 }
+                return false;
             }
-        )['filesystem'];
-        return $this->mm->getFilesystem($fs);
+        );
+        return $this->mm->getFilesystem(array_pop($fs)['filesystem']);
     }
 
-    public function setMappings($m){
-        die();
-        $this->mappings = $m;
+    public function getFilesystem($fs){
+        return $this->mm->getFilesystem($fs);
     }
 }

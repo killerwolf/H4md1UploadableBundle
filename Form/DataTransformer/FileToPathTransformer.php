@@ -24,10 +24,7 @@ class FileToPathTransformer implements DataTransformerInterface
      */
     public function transform($file)
     {
-        //return $file ? new File('/var/www/diaporama/var/tmp/upload/'.$file) : null ;
-        //dump($this->um->getFilesystem('lfs')->getMetadata($file));
         return $file ? $this->um->getFilesystemByEntity('H4md1\AppBundle\Entity\Website')->getMetadata($file) : null ;
-
     }
 
     /**
@@ -36,14 +33,13 @@ class FileToPathTransformer implements DataTransformerInterface
      */
     public function reverseTransform($file)
     {
-    	//move uploaded file to a temporary location
-        //$file->move('/var/www/diaporama/var/tmp/upload/', $file->getClientOriginalName());
-    	//return $file->getClientOriginalName();
-
-        $fileObject = $file->openFile();
-
-        $this->mm->getFilesystem('lfs')->write($file->getClientOriginalName(),$this->mm->getFilesystem('lfs_tmp')->read($file->getBasename()));
-        //$this->fs->write('plip',$this->fs->readAndDelete())
+        $this->um
+            ->getFilesystemByEntity('H4md1\AppBundle\Entity\Website')
+            ->write(
+                $file->getClientOriginalName(),
+                $this->um->getFilesystem('tmp')->read($file->getBasename()
+            )
+        );
         return $file->getClientOriginalName();
     }
 }
